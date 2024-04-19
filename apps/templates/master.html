@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="static/img/favicon.jpg" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-bar" id="topbar">
+        <div>
+          {% if user.is_authenticated %}
+          <!-- Check if user is authenticated and not on home page -->
+          {% if request.path != '/' %}
+          <button
+            class="button-my-bookings"
+            onclick="location.href='{% url 'home' %}'"
+          >
+            Home
+          </button>
+          {% endif %} {% endif %} {% if request.path == '/' %}
+          <button
+            class="button-my-bookings"
+            onclick="location.href='{% url 'mybookings' %}'"
+          >
+            My Bookings
+          </button>
+          {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="user-menu">
+          <div class="user-info">{{ user.username }}</div>
+        </div>
+        <div>
+          <button class="button-my-bookings" onclick="location.href=''">
+            Edit Profile
+          </button>
+          <button
+            class="button-my-bookings"
+            onclick="location.href='{% url 'logout' %}'"
+          >
+            Logout
+          </button>
+        </div>
+        {% else %}
+        <div class="website-title">
+          Fly / Bharat
+          <div class="quote">"Adventure awaits – let your journey begin!"</div>
+        </div>
+        <div class="button-container">
+          <button class="button" onclick="location.href='{% url 'login' %}'">
+            Login
+          </button>
+        </div>
+        {% endif %}
+      </div>
+      <div class="content">{% block content %}{% endblock %}</div>
+      <div class="flex-box">
+        <p class="copyright">
+          Ⓒ Copyright 2024 Fly / Bharat. All rights reserved.
+        </p>
+      </div>
+    </div>
+    <script src="{% static 'js/dropdown.js' %}"></script>
+  </body>
+</html>

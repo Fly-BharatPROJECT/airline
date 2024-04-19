@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Bookings</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <style>
+      /* Add CSS styles for flex layout */
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      .booking-title {
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      body {
+        padding-top: 70px; /* Adjusted top padding */
+        padding-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+
+        height: 100vh;
+      }
+
+      .top-bar {
+        width: 100%;
+        position: absolute;
+        display: flow-root;
+        gap: 10px;
+        top: 0;
+        left: 0;
+        margin-top: 0; /* Adjusted margin-top */
+        background-color: aqua; /* Dark background color */
+        /* White text color */
+        padding: 15px; /* Adjusted padding */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
+        z-index: 1000; /* Ensure the top bar is above other content */
+      }
+
+      .download-button {
+        margin-top: 20px;
+      }
+
+      .home-button {
+        margin-top: 20px;
+      }
+
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <button class="home-button" onclick="goToHome()">Home</button>
+    </div>
+    <h1>My Bookings</h1>
+    <!-- Iterate over each booking detail -->
+    <div class="main-container" id="main-container">
+      {% for booking_detail in booking_details %}
+      <div class="booking">
+        <h2
+          class="booking-title"
+          onclick="showTicket({{ booking_detail.booking.pk }})"
+        >
+          Booking ID: {{ booking_detail.booking.pk }}
+        </h2>
+        <div id="ticket-{{ booking_detail.booking.pk }}" style="display: none">
+          <p>Reference Number: {{ booking_detail.reference_number }}</p>
+          <h3>Passenger Details</h3>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <!-- Add more columns if needed -->
+            </tr>
+            {% for passenger in booking_detail.passengers %}
+            <tr>
+              <td>{{ passenger.name }}</td>
+              <td>{{ passenger.age }}</td>
+              <td>{{ passenger.gender }}</td>
+              <!-- Add more columns if needed -->
+            </tr>
+            {% endfor %}
+          </table>
+          <h3>Flight Details</h3>
+          <table>
+            <tr>
+              <td>Flight No:</td>
+              <td>{{ booking_detail.flight.flight_number }}</td>
+              <td>Journey Date:</td>
+              <td>{{ booking_detail.booking.departure_date }}</td>
+            </tr>
+            <tr>
+              <td>From:</td>
+              <td>{{ booking_detail.flight.from_location }}</td>
+              <td>To:</td>
+              <td>{{ booking_detail.flight.to_location }}</td>
+            </tr>
+            <tr>
+              <td>Class:</td>
+              <td>{{ booking_detail.booking.class_type }}</td>
+              <td>Flight Name:</td>
+              <td>{{ booking_detail.flight.airline }}</td>
+            </tr>
+          </table>
+          <h3>Total Fare</h3>
+          <table>
+            <tr>
+              <td>Flight Price:</td>
+              <td>{{ booking_detail.flight.price }}</td>
+            </tr>
+            <tr>
+              <td>GST Tax:</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>Total Price:</td>
+              <td>{{ booking_detail.fare.amount }}</td>
+            </tr>
+          </table>
+          <button
+            class="download-button"
+            onclick="downloadTicket({{ booking_detail.booking.pk }})"
+          >
+            Download Ticket
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <script>
+      function showTicket(bookingId) {
+        const ticket = document.getElementById(`ticket-${bookingId}`);
+        if (ticket.style.display === "none") {
+          ticket.style.display = "block";
+        } else {
+          ticket.style.display = "none";
+        }
+      }
+
+      function downloadTicket(bookingId) {
+        const ticket = document.getElementById(`ticket-${bookingId}`);
+
+        // Use html2pdf to render the ticket as PDF
+        html2pdf().from(ticket).save();
+      }
+
+      function goToHome() {
+        // Redirect to home page
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>

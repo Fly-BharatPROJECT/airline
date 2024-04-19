@@ -1,0 +1,225 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Success</title>
+    <!-- Include html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+    <style>
+      body {
+        padding-top: 70px; /* Adjusted top padding */
+        padding-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .top-bar {
+        width: 100%;
+        position: absolute;
+        display: flow-root;
+        gap: 10px;
+        top: 0;
+        left: 0;
+        margin-top: 0; /* Adjusted margin-top */
+        background-color: aqua; /* Dark background color */
+        /* White text color */
+        padding: 15px; /* Adjusted padding */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
+        z-index: 1000; /* Ensure the top bar is above other content */
+      }
+
+      .main-container {
+        margin-top: 40px; /* Adjusted margin-top */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 10px;
+        width: 80%;
+        border: 2px solid black;
+        background-color: aqua;
+      }
+      .container {
+        border: 2px solid black;
+        padding: 10px;
+      }
+      .second-container {
+        border: 2px solid black;
+        padding: 10px;
+      }
+
+      .rectangle-image {
+        max-width: 100%;
+        max-height: 100%;
+      }
+      hr {
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        top: 20px;
+        border: none;
+        height: 5px;
+        background: black;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .download-button {
+        margin-top: 20px;
+      }
+      .barcode {
+        padding: 10px;
+        position: relative;
+      }
+      .home-button {
+        margin-top: 20px;
+      }
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body onload="generateBarcode()">
+    <div class="top-bar">
+      <button class="home-button" onclick="goToHome()">Home</button>
+      <button class="download-button" onclick="downloadPDF()">
+        Download Ticket
+      </button>
+    </div>
+    <h1>Payment Success</h1>
+    <div class="main-container" id="main-container">
+      <div class="container">
+        <img
+          class="rectangle-image"
+          src="{% static 'img/logo.png' %}"
+          alt="Plane Image"
+        />
+        <hr />
+        <!-- Display booking details -->
+        <h2>Booking Details</h2>
+        <p>Booking ID: {{ booking.pk }}</p>
+        <p>Reference Number: {{ reference_number }}</p>
+        <hr />
+        <h2>Passenger Details</h2>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Seat</th>
+          </tr>
+          {% for passenger in passengers %}
+          <tr>
+            <td>{{ passenger.name }}</td>
+            <td>{{ passenger.age }}</td>
+            <td>{{ passenger.gender }}</td>
+            <td>{{ passenger.seat }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="second-container">
+        <h2>Flight Details</h2>
+        <table>
+          <tr>
+            <td>Flight No:</td>
+            <td>{{flight.flight_number}}</td>
+            <td>Journey Date:</td>
+            <td>{{booking.departure_date}}</td>
+          </tr>
+          <tr>
+            <td>From:</td>
+            <td>{{flight.from_location}}</td>
+            <td>To:</td>
+            <td>{{flight.to_location}}</td>
+          </tr>
+          <tr>
+            <td>Class:</td>
+            <td>{{booking.class_type}}</td>
+            <td>Flight Name:</td>
+            <td>{{flight.airline}}</td>
+          </tr>
+          <tr>
+            <td>Departure Time:</td>
+            <td>{{flight.departure_time}}</td>
+            <td>Arrival Time:</td>
+            <td>{{flight.arrival_time}}</td>
+          </tr>
+        </table>
+        <h2>Total Fare</h2>
+        <table>
+          <tr>
+            <td>Flight Price:</td>
+            <td>{{flight.price}}</td>
+          </tr>
+          <tr>
+            <td>GST Tax :</td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>Total Price:</td>
+            <td>{{fare.amount}}</td>
+          </tr>
+        </table>
+        <div class="barcode">
+          <!-- Barcode will be displayed here -->
+          <svg id="barcode"></svg>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Disable back navigation
+      window.history.pushState(null, "", window.location.href);
+      window.onpopstate = function () {
+        goToHome(); // Redirect to home page if user tries to navigate back
+      };
+      function generateBarcode() {
+        // Get the input number
+        var number = "{{ reference_number }}"; // Added quotes for string interpolation
+
+        // Generate barcode
+        JsBarcode("#barcode", number, {
+          format: "CODE128", // Choose barcode format (e.g., CODE128)
+          displayValue: true, // Display the value below the barcode
+        });
+      }
+
+      function downloadPDF() {
+        const mainContainer = document.getElementById("main-container");
+
+        // Use html2pdf to render the entire page as PDF
+        html2pdf().from(mainContainer).save();
+      }
+
+      function goToHome() {
+        // Redirect to home page
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>
