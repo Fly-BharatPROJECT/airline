@@ -317,8 +317,3 @@ def generate_seat_numbers(flight_id, total_seats):
             if count == total_seats:
                 return available_seats
     return available_seats
-
-
-
-                    
-    

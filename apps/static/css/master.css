@@ -1,0 +1,110 @@
+  .top-bar {
+    background-color: #4898f4; /* Blue color */
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+  }
+  .top-bar .left-content,
+  .top-bar .right-content {
+    display: flex;
+    align-items: center;
+  }
+  .top-bar button {
+    padding: 10px 10px;
+    background-color: #007bff;
+    color: #f8f8f9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .top-bar button:hover {
+    background-color: #0056b3;
+  }
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .search-form {
+    display: flex;
+  }
+  .search-form input,
+  .search-form select {
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: solid rgb(148, 192, 243);
+  }
+  .search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .middle-flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .bottom-bar {
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 400px;
+  }
+  .heading {
+    color: #f8f8f9;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px; /* Adjust the gap as needed */
+  }
+  .grid-item {
+    text-align: center;
+    position: relative;
+    height: 300px; /* Set the height of grid items */
+  }
+  .grid-item img {
+    width: 100%; /* Ensure the image fills the entire width of its container */
+    height: 100%; /* Ensure the image fills the entire height of its container */
+    object-fit: cover; /* Maintain aspect ratio while covering the entire container */
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  .grid-item:hover img {
+    transform: scale(1.05);
+  }
+  .destination-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .footer-bar {
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  .footer-bar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+  }

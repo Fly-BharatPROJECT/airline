@@ -1,137 +1,138 @@
-<!-- main.html -->
-{% extends "master.html" %} {% load static %} {% block title %}Fly / Bharat {% endblock %} {% block content %}
-<div class="main-content">
-  <div class="search-flight-box">
-    <h2 class="heading">Search Flight</h2>
-    <form id="search-form" action="{% url 'bookflight' %}" method="GET">
-      <div class="form-group">
-        <label for="from">From:</label>
-        <input type="text" id="from" name="from" required autocomplete="off" />
-        <!-- Suggestions dropdown for 'From' -->
-        <div id="from-suggestions" class="suggestions"></div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyTravel - Book Your Next Adventure</title>
+    <link rel="stylesheet" href="{% static 'css/master.css' %}" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-image: url("{% static 'img/fly.jpg' %}");
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="left-content">
+        <button onclick="location.href='{% url 'mybookings' %}'">
+          My Bookings
+        </button>
       </div>
-      <div class="form-group">
-        <label for="to">To:</label>
-        <input type="text" id="to" name="to" required autocomplete="off" />
-        <!-- Suggestions dropdown for 'To' -->
-        <div id="to-suggestions" class="suggestions"></div>
+      <h1>FLY / Bharat</h1>
+      {% if user.is_authenticated %}
+      <div class="right-content">
+        <button onclick="location.href='{% url 'logout' %}'">Logout</button>
       </div>
-      <div class="form-group">
-        <label for="departure_date">Departure Date:</label>
-        <input type="date" id="departure_date" name="departure_date" required />
+      {% else %}
+      <div class="right-content">
+        <button onclick="location.href='{% url 'login' %}'">Login</button>
       </div>
-      <div class="form-group">
-        <label for="class">Class:</label>
+      {% endif %}
+    </div>
+
+    <div class="flex-container">
+      <form
+        class="search-form"
+        id="search-form"
+        action="{% url 'bookflight' %}"
+        method="GET"
+      >
+        <input
+          type="text"
+          id="from"
+          name="from"
+          list="destinations"
+          placeholder="From"
+          required
+        />
+        <input
+          type="text"
+          id="to"
+          name="to"
+          list="destinations"
+          placeholder="To"
+          required
+        />
+        <datalist id="destinations">
+          <option value="New Delhi(DEL)"></option>
+          <option value="Mumbai(BOM)"></option>
+          <option value="Bengaluru(BLR)"></option>
+          <option value="Hyderabad(HYDs)"></option>
+          <option value="Chennai(MAA)"></option>
+          <option value="Kolkata(CCU)"></option>
+          <option value="Bhubaneswar(BBI)"></option>
+          <option value="Darjeeling(IXB)"></option>
+        </datalist>
+        <input type="date" name="departure_date" required />
         <select id="class" name="class">
           <option value="Economy">Economy</option>
           <option value="Business">Business</option>
           <option value="First Class">First Class</option>
         </select>
-      </div>
-      <button type="submit">Search</button>
-    </form>
-  </div>
-  <div class="popular-destinations">
-    <h2 class="heading">Popular Destinations</h2>
-    <div class="grid-container">
-      <div class="grid-item">
-        <a href="https://en.wikipedia.org/wiki/New_Delhi" target="_blank">
-          <img src="{% static 'img/delhi.jpg' %}" alt="Delhi" />
-        </a>
-        <div class="destination-name">Delhi</div>
-      </div>
-      <div class="grid-item">
-        <a href="https://en.wikipedia.org/wiki/Russia" target="_blank">
-          <img src="{% static 'img/russia.jpg' %}" alt="Russia" />
-        </a>
-        <div class="destination-name">Russia</div>
-      </div>
-      <div class="grid-item">
-        <img src="{% static 'img/australia.jpg' %}" alt="Australia" />
-        <div class="destination-name">Australia</div>
-      </div>
-      <div class="grid-item">
-        <img src="{% static 'img/japan.jpg' %}" alt="Japan" />
-        <div class="destination-name">Japan</div>
-      </div>
-      <div class="grid-item">
-        <img src="{% static 'img/zealand.jpg' %}" alt="zealand" />
-        <div class="destination-name">New Zealand</div>
-      </div>
-      <div class="grid-item">
-        <img src="{% static 'img/Puerto.jpg' %}" alt="Puerto rico" />
-        <div class="destination-name">Puerto Rico</div>
+        <button type="submit" class="search-button">Search</button>
+      </form>
+    </div>
+
+    <div class="middle-flex-container">
+      <h1></h1>
+    </div>
+
+    <div class="bottom-bar">
+      <h2 class="heading">Popular Destinations</h2>
+      <div class="grid-container">
+        <div class="grid-item">
+          <a href="https://en.wikipedia.org/wiki/New_Delhi" target="_blank">
+            <img src="{% static 'img/delhi.jpg' %}" alt="Delhi" />
+          </a>
+          <div class="destination-name">Delhi</div>
+        </div>
+        <div class="grid-item">
+          <a href="" target="_blank">
+            <img src="{% static 'img/odisha.jpg' %}" alt="Odisha" />
+          </a>
+          <div class="destination-name">Odisha</div>
+        </div>
+        <div class="grid-item">
+          <img src="{% static 'img/kolkata.jpg' %}" alt="Kolkata" />
+          <div class="destination-name">Kolkata</div>
+        </div>
+        <div class="grid-item">
+          <img src="{% static 'img/chennai.jpg' %}" alt="Chennai" />
+          <div class="destination-name">Chennai</div>
+        </div>
+        <div class="grid-item">
+          <img src="{% static 'img/Darjeeling.jpg' %}" alt="Darjeeling" />
+          <div class="destination-name">Darjeeling</div>
+        </div>
+        <div class="grid-item">
+          <img src="{% static 'img/mumbai.jpg' %}" alt="Mumbai" />
+          <div class="destination-name">Mumbai</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="bottom-bar">
-    <a href="">About Us</a> | <a href="">Privacy Policy</a> |
-    <a href="">Contact Us</a>
-  </div>
-</div>
 
-<script>
-  window.onpopstate = function () {
-    window.location.href = "/";
-  };
+    <div class="footer-bar">
+      <a href="#">Contact Us</a>
+      <a href="#">About Us</a>
+      <a href="#">Social Media</a>
+    </div>
+    <script>
+      document
+        .querySelector(".search-button")
+        .addEventListener("click", function (event) {
+          var fromInput = document.querySelector('input[name="from"]');
+          var toInput = document.querySelector('input[name="to"]');
 
-  // Fetch and display suggestions for 'From' input field
-  const fromInput = document.getElementById("from");
-  const fromSuggestions = document.getElementById("from-suggestions");
-
-  fromInput.addEventListener("input", function () {
-    const inputValue = this.value;
-    if (inputValue.length > 0) {
-      fetchSuggestions(inputValue, "from").then((data) => {
-        displaySuggestions(data, fromSuggestions);
-      });
-    } else {
-      fromSuggestions.innerHTML = "";
-    }
-  });
-
-  // Fetch and display suggestions for 'To' input field
-  const toInput = document.getElementById("to");
-  const toSuggestions = document.getElementById("to-suggestions");
-
-  toInput.addEventListener("input", function () {
-    const inputValue = this.value;
-    if (inputValue.length > 0) {
-      fetchSuggestions(inputValue, "to").then((data) => {
-        displaySuggestions(data, toSuggestions);
-      });
-    } else {
-      toSuggestions.innerHTML = "";
-    }
-  });
-
-  // Function to fetch suggestions from backend
-  async function fetchSuggestions(query, field) {
-    const response = await fetch(
-      `/get_suggestions/?query=${query}&field=${field}`
-    );
-    const data = await response.json();
-    return data;
-  }
-
-  // Function to display suggestions in dropdown
-  function displaySuggestions(suggestions, container) {
-    container.innerHTML = "";
-    suggestions.forEach((suggestion) => {
-      const suggestionElement = document.createElement("div");
-      suggestionElement.textContent = suggestion.name;
-      suggestionElement.classList.add("suggestion");
-      suggestionElement.addEventListener("click", function () {
-        setInputValue(suggestion.name, container.previousElementSibling);
-        container.innerHTML = "";
-      });
-      container.appendChild(suggestionElement);
-    });
-  }
-
-  // Function to set input value when suggestion is clicked
-  function setInputValue(value, input) {
-    input.value = value;
-  }
-</script>
-{% endblock %}
+          if (fromInput.value === toInput.value) {
+            alert("From and To destinations cannot be the same.");
+            event.preventDefault();
+          }
+        });
+    </script>
+  </body>
+</html>
