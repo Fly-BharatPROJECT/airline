@@ -1,76 +1,84 @@
-{% extends "master.html" %} {% load static %} {% block title %}Search Flight
-Results{% endblock %} {% block content %}
-<div class="main-content">
-  <div class="destination-bar"> <strong>
-    <p>From: {{ from_location }} &#8680; To: {{ to_location }}</p>
-    <p>Departure Date: {{ departure_date }}</p>
-    {% if class_type %}
-    <p>Class: {{ class_type }}</p>
-    {% endif %}
+{% extends "master2.html" %} {% load static %} {% block title %} Search Flight
+Results {% endblock %} {% block content %}
+<div ><h3 class="heading">Available Flights:</h3></div>
+<div class="flex-container-wrapper">
+  <div class="flex-container">
+    <div class="back">
+    <strong>
+      <p>From: {{ from_location }} &#8680; To: {{ to_location }}</p>
+      <p>Departure Date: {{ departure_date }}</p>
+      {% if class_type %}
+      <p>Class: {{ class_type }}</p>
+      {% endif %}
+    </strong>
   </div>
-</strong>
-  <h2 class="heading">Search Flight Results</h2>
-
-  {% if available_flights %}
-  <div class="available-flights">
-    <h3>Available Flights:</h3>
+  </div>
+  
+  <div class="flex-container2">   
     <table class="flighttable">
       <thead>
         <tr>
           <th>Airline</th>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <th>Flight Number</th>
+          <th>&nbsp;</th>
           <th>&nbsp;</th>
           <th>Departure Time</th>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <th>Arrival Time</th>
+          <th>&nbsp;</th>
           <th>&nbsp;</th>
           <th>Seat</th>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <th>Price</th>
-          <!-- Add more table headings for additional flight details -->
-          <th></th>
-          <!-- Empty header for 'Book Now' button -->
         </tr>
       </thead>
       <tbody>
-        <!-- Loop through the available flights and display them in table rows -->
-        {% for flight in available_flights %}
+        {% if available_flights %} {% for flight in available_flights %}
         <tr>
           <td>{{ flight.airline }}</td>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <td>{{ flight.flight_number }}</td>
+          <th>&nbsp;</th>
           <th>&nbsp;</th>
           <td>{{ flight.departure_time }}</td>
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <td>{{ flight.arrival_time }}</td>
           <th>&nbsp;</th>
-          {% if flight.total_seat is not 0 %}
+          <th>&nbsp;</th>
+          {% if flight.total_seat %}
           <td>{{ flight.total_seat }}</td>
           {% else %}
           <td>Booked</td>
           {% endif %}
           <th>&nbsp;</th>
+          <th>&nbsp;</th>
           <td>{{ flight.price }}</td>
           <th>&nbsp; &nbsp;</th>
-          <!-- Add more table cells for additional flight details -->
           <td>
-            {% if flight.departure_date >= today %} {% if flight.total_seat > 0 %}
-            {% if flight.is_available %}
+            {% if flight.departure_date >= today %} {% if flight.total_seat > 0 %} {% if flight.is_available %}
             <a
               href="{% url 'passenger_details' %}?from_location={{ from_location }}&to_location={{ to_location }}&departure_date={{ departure_date }}&class_type={{ class_type }}&flight_fare={{ flight.price }}&flight_id={{ flight.id }}"
               class="book-button"
               >Book Now</a
             >
-            {% else %} Flight-Cancelled {% endif %} {% else %} Not Available {% endif %} {% else %} <strong>  Already Left </strong> {% endif %}
+            {% else %} <span class="no"> Flight-Cancelled </span> {% endif %} {% else %} Not Available {% endif %} {% else %}
+            <strong class="left">Already Left</strong>
+            {% endif %}
           </td>
         </tr>
-        {% endfor %}
+        {% endfor %} {% else %}
+        <tr>
+          <td colspan="11" class="no">No available flights.</td>
+        </tr>
+        {% endif %}
       </tbody>
     </table>
   </div>
-  {% else %}
-  <p>No available flights.</p>
-  {% endif %}
 </div>
 {% endblock %}

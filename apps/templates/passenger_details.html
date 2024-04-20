@@ -1,295 +1,311 @@
-{% extends "master.html" %} {% block content %}
-<div class="main-content">
-  <h2 class="heading">Passenger Details</h2>
-  <form
-    id="passengerForm"
-    action="{% url 'passenger_details'  %}"
-    method="post"
-  >
-    {% csrf_token %}
-    <div class="flight-details">
-      <p>Flight Details:</p>
-      <p>From: {{ from_location }}</p>
-      <p>To: {{ to_location }}</p>
-      <p>Departure Date: {{ departure_date }}</p>
-      {% if class_type %}
-      <p>Class: {{ class_type }}</p>
-      {% endif %}
-      <p>Price: {{ flight_fare }}</p>
-      <!-- Add hidden input fields for flight details -->
-      <input type="hidden" name="departure_date" value="{{ departure_date }}" />
-      {% if class_type %}
-      <input type="hidden" name="class_type" value="{{ class_type }}" />
-      {% endif %}
-      <input type="hidden" name="flight_fare" value="{{ flight_fare }}" />
-      <input type="hidden" name="flight_id" value="{{ flight_id }}" />
-    </div>
-    <div class="passenger-form">
-      <!-- Contact Information -->
-      <div class="contact-information">
-        <h3>Contact Information</h3>
-        <label for="contact_number">Contact Number:</label>
-        <input type="text" id="contact_number" name="contact_number" required />
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-      </div>
-      <h3>Enter Passenger Details:</h3>
-      <div>
-        <button
-          type="button"
-          class="button-my-bookings"
-          onclick="toggleInput()"
-        >
-          Add Passenger
-        </button>
-        <button
-          type="button"
-          class="button-my-bookings"
-          onclick="removeInput()"
-        >
-          Remove Passenger
-        </button>
-        <hr />
-        <p>
-          <label for="name" id="name1" style="display: none">Name</label>
-          <input
-            type="text"
-            id="input1"
-            style="display: none"
-            placeholder="name"
-            name="passenger_name1"
-            required
-          />
-          <label for="age" id="nage1" style="display: none">Age</label>
-          <input
-            type="number"
-            id="age1"
-            style="display: none"
-            placeholder="age"
-            name="passenger_age1"
-          />
-          <label for="gender" id="gender1" style="display: none">Gender</label>
-          <select name="passenger_gender1" id="gendern1" style="display: none">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </p>
+{% extends "master2.html" %} {% load static %} {% block title %} Search Flight
+Results {% endblock %} {% block content %}
 
-        <p>
-          <label for="name" id="name2" style="display: none">Name</label>
-          <input
-            type="text"
-            id="input2"
-            style="display: none"
-            placeholder="name"
-            name="passenger_name2"
-          />
-          <label for="age" id="nage2" style="display: none">Age</label>
-          <input
-            type="number"
-            id="age2"
-            style="display: none"
-            placeholder="age"
-            name="passenger_age2"
-          />
-          <label for="gender" id="gender2" style="display: none">Gender</label>
-          <select name="passenger_gender2" id="gendern2" style="display: none">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </p>
-
-        <p>
-          <label for="name" id="name3" style="display: none">Name</label>
-          <input
-            type="text"
-            id="input3"
-            style="display: none"
-            placeholder="name"
-            name="passenger_name3"
-          />
-          <label for="age" id="nage3" style="display: none">Age</label>
-          <input
-            type="number"
-            id="age3"
-            style="display: none"
-            placeholder="age"
-            name="passenger_age3"
-          />
-          <label for="gender" id="gender3" style="display: none">Gender</label>
-          <select name="passenger_gender3" id="gendern3" style="display: none">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </p>
-
-        <p>
-          <label for="name" id="name4" style="display: none">Name</label>
-          <input
-            type="text"
-            id="input4"
-            style="display: none"
-            placeholder="name"
-            name="passenger_name4"
-          />
-          <label for="age" id="nage4" style="display: none">Age</label>
-          <input
-            type="number"
-            id="age4"
-            style="display: none"
-            placeholder="age"
-            name="passenger_age4"
-          />
-          <label for="gender" id="gender4" style="display: none">Gender</label>
-          <select name="passenger_gender4" id="gendern4" style="display: none">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </p>
-      </div>
-      <!-- Fare Summary -->
-      <div id="fare-summary">
-        <h3>Fare Summary</h3>
-        <hr />
-        <label for="totalpassenger">Total Passenger :</label>
-        <span id="totalpassenger_value">0</span>
-        <input
-          type="hidden"
-          name="totalpassenger"
-          id="totalpassenger_input"
-          value="0"
-        />
-        <br />
-        <label for="tax">Flight Tax :</label>
-        <span id="tax_value">100</span>
-        <br />
-        <label for="total_fare">Total Fare :</label>
-        <span id="total_fare_value" name="total_fare_value">0</span>
-        <input
-          type="hidden"
-          name="total_fare"
-          id="total_fare_input"
-          value="0"
-        />
-        <hr />
-      </div>
-      <div id="passengerErrorMessage" style="display: none; color: red">
-        Please add at least one passenger.
-      </div>
-    </div>
-    <button
-      type="button"
-      class="button-my-bookings"
-      onclick="checkPassengerAndSubmit()"
-    >
-      Next
-    </button>
-  </form>
-</div>
-<script>
-  let counter = 0;
-  let people = 0;
-
-  function toggleInput() {
-    counter++;
-    if (counter <= 4) {
-      let inputId = "input" + counter;
-      let nameId = "name" + counter;
-      let ageId = "age" + counter;
-      let nageId = "nage" + counter;
-      let genderId = "gender" + counter;
-      let gendernId = "gendern" + counter;
-
-      document.getElementById(inputId).style.display = "block";
-      document.getElementById(nameId).style.display = "block";
-      document.getElementById(ageId).style.display = "block";
-      document.getElementById(nageId).style.display = "block";
-      document.getElementById(genderId).style.display = "block";
-      document.getElementById(gendernId).style.display = "block";
-
-      people++;
-      updatePassengerNumber();
-      calculateFare();
-    } else {
-      counter = 4; // Reset counter to maximum
-    }
-  }
-
-  function removeInput() {
-    if (counter > 0) {
-      let inputId = "input" + counter;
-      let nameId = "name" + counter;
-      let ageId = "age" + counter;
-      let nageId = "nage" + counter;
-      let genderId = "gender" + counter;
-      let gendernId = "gendern" + counter;
-
-      document.getElementById(inputId).style.display = "none";
-      document.getElementById(nameId).style.display = "none";
-      document.getElementById(ageId).style.display = "none";
-      document.getElementById(nageId).style.display = "none";
-      document.getElementById(genderId).style.display = "none";
-      document.getElementById(gendernId).style.display = "none";
-
-      counter--;
-      people--;
-      updatePassengerNumber();
-      calculateFare();
-    }
-  }
-
-  function calculateFare() {
-    let fare = {{ flight_fare }};
-    let totalFare = 100 + people * parseFloat(fare);
-    document.getElementById("total_fare_value").textContent = totalFare;
-    document.getElementById("total_fare_input").value = totalFare;
-  }
-
-  function updatePassengerNumber() {
-    document.getElementById("totalpassenger_value").textContent = people;
-    document.getElementById("totalpassenger_input").value = people;
-  }
-
-  function checkPassengerAndSubmit() {
-    // Check if contact information is filled
-    let contactNumber = document.getElementById("contact_number").value.trim();
-    let email = document.getElementById("email").value.trim();
-
-    if (contactNumber === "" || email === "") {
-      document.getElementById("passengerErrorMessage").textContent =
-        "Please fill out contact information.";
-      document.getElementById("passengerErrorMessage").style.display = "block";
-      return; // Stop further execution
-    }
-
-    // Check if at least one passenger is added
-    if (people === 0) {
-      document.getElementById("passengerErrorMessage").textContent =
-        "Please add at least one passenger.";
-      document.getElementById("passengerErrorMessage").style.display = "block";
-      return; // Stop further execution
-    }
-
-    // Check if all passenger details are filled out
-    for (let i = 1; i <= people; i++) {
-      let passengerName = document.getElementById("input" + i).value.trim();
-      let passengerAge = document.getElementById("age" + i).value.trim();
-
-      if (passengerName === "" || passengerAge === "") {
-        document.getElementById("passengerErrorMessage").textContent =
-          "Please fill out all passenger details.";
-        document.getElementById("passengerErrorMessage").style.display = "block";
-        return; // Stop further execution
+  <style>
+     .left-section {
+        background-color: aquamarine;
       }
-    }
 
-    // If all conditions are met, hide error message and submit the form
-    document.getElementById("passengerErrorMessage").style.display = "none";
-    document.getElementById("passengerForm").submit();
-  }
-</script>
-{% endblock %}
+  </style>
+    <div class="flex-container-1">
+      <div class="left-section">
+        <h2 class="heading">Passenger Details</h2>
+        <form
+          id="passengerForm"
+          action="{% url 'passenger_details'  %}"
+          method="post"
+        >
+          {% csrf_token %}
+          <div class="flight-details">
+            <p>Flight Details:</p>
+            <p>From: {{ from_location }}</p>
+            <p>To: {{ to_location }}</p>
+            <p>Departure Date: {{ departure_date }}</p>
+            {% if class_type %}
+            <p>Class: {{ class_type }}</p>
+            {% endif %}
+            <p>Price: {{ flight_fare }}</p>
+            <!-- Add hidden input fields for flight details -->
+            <input type="hidden" name="departure_date" value="{{ departure_date }}" />
+            {% if class_type %}
+            <input type="hidden" name="class_type" value="{{ class_type }}" />
+            {% endif %}
+            <input type="hidden" name="flight_fare" value="{{ flight_fare }}" />
+            <input type="hidden" name="flight_id" value="{{ flight_id }}" />
+          </div>
+          <div>
+             <!-- Fare Summary -->
+             <div id="fare-summary">
+              <h3>Fare Summary</h3>
+              <hr />
+              <label for="totalpassenger">Total Passenger :</label>
+              <span id="totalpassenger_value">0</span>
+              <input
+                type="hidden"
+                name="totalpassenger"
+                id="totalpassenger_input"
+                value="0"
+              />
+              <br />
+              <label for="tax">Flight Tax :</label>
+              <span id="tax_value">100</span>
+              <br />
+              <label for="total_fare">Total Fare :</label>
+              <span id="total_fare_value" name="total_fare_value">0</span>
+              <input
+                type="hidden"
+                name="total_fare"
+                id="total_fare_input"
+                value="0"
+              />
+              <hr />
+            </div>
+            <div id="passengerErrorMessage" style="display: none; color: red">
+              Please add at least one passenger.
+            </div>
+          </div>
+          <button
+            type="button"
+            class="button-my-bookings"
+            onclick="checkPassengerAndSubmit()"
+          >
+            Next
+          </button>
+         
+      </div>
+      <div class="right-section">
+        <div class="passenger-form">
+            <!-- Contact Information -->
+            <div class="contact-information">
+              <h3>Contact Information</h3>
+              <label for="contact_number">Contact Number:</label>
+              <input type="text" id="contact_number" name="contact_number" required />
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <h3>Enter Passenger Details:</h3>
+            <div>
+              <button
+                type="button"
+                class="button-my-bookings"
+                onclick="toggleInput()"
+              >
+                Add Passenger
+              </button>
+              <button
+                type="button"
+                class="button-my-bookings"
+                onclick="removeInput()"
+              >
+                Remove Passenger
+              </button>
+              <hr />
+              <p>
+                <label for="name" id="name1" style="display: none">Name</label>
+                <input
+                  type="text"
+                  id="input1"
+                  style="display: none"
+                  placeholder="name"
+                  name="passenger_name1"
+                  required
+                />
+                <label for="age" id="nage1" style="display: none">Age</label>
+                <input
+                  type="number"
+                  id="age1"
+                  style="display: none"
+                  placeholder="age"
+                  name="passenger_age1"
+                />
+                <label for="gender" id="gender1" style="display: none">Gender</label>
+                <select name="passenger_gender1" id="gendern1" style="display: none">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </p>
+      
+              <p>
+                <label for="name" id="name2" style="display: none">Name</label>
+                <input
+                  type="text"
+                  id="input2"
+                  style="display: none"
+                  placeholder="name"
+                  name="passenger_name2"
+                />
+                <label for="age" id="nage2" style="display: none">Age</label>
+                <input
+                  type="number"
+                  id="age2"
+                  style="display: none"
+                  placeholder="age"
+                  name="passenger_age2"
+                />
+                <label for="gender" id="gender2" style="display: none">Gender</label>
+                <select name="passenger_gender2" id="gendern2" style="display: none">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </p>
+      
+              <p>
+                <label for="name" id="name3" style="display: none">Name</label>
+                <input
+                  type="text"
+                  id="input3"
+                  style="display: none"
+                  placeholder="name"
+                  name="passenger_name3"
+                />
+                <label for="age" id="nage3" style="display: none">Age</label>
+                <input
+                  type="number"
+                  id="age3"
+                  style="display: none"
+                  placeholder="age"
+                  name="passenger_age3"
+                />
+                <label for="gender" id="gender3" style="display: none">Gender</label>
+                <select name="passenger_gender3" id="gendern3" style="display: none">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </p>
+      
+              <p>
+                <label for="name" id="name4" style="display: none">Name</label>
+                <input
+                  type="text"
+                  id="input4"
+                  style="display: none"
+                  placeholder="name"
+                  name="passenger_name4"
+                />
+                <label for="age" id="nage4" style="display: none">Age</label>
+                <input
+                  type="number"
+                  id="age4"
+                  style="display: none"
+                  placeholder="age"
+                  name="passenger_age4"
+                />
+                <label for="gender" id="gender4" style="display: none">Gender</label>
+                <select name="passenger_gender4" id="gendern4" style="display: none">
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </p>
+            </div>
+           
+        </form>
+      </div>
+      </div>
+    </div>
+    <script>
+        let counter = 0;
+        let people = 0;
+      
+        function toggleInput() {
+          counter++;
+          if (counter <= 4) {
+            let inputId = "input" + counter;
+            let nameId = "name" + counter;
+            let ageId = "age" + counter;
+            let nageId = "nage" + counter;
+            let genderId = "gender" + counter;
+            let gendernId = "gendern" + counter;
+      
+            document.getElementById(inputId).style.display = "block";
+            document.getElementById(nameId).style.display = "block";
+            document.getElementById(ageId).style.display = "block";
+            document.getElementById(nageId).style.display = "block";
+            document.getElementById(genderId).style.display = "block";
+            document.getElementById(gendernId).style.display = "block";
+      
+            people++;
+            updatePassengerNumber();
+            calculateFare();
+          } else {
+            counter = 4; // Reset counter to maximum
+          }
+        }
+      
+        function removeInput() {
+          if (counter > 0) {
+            let inputId = "input" + counter;
+            let nameId = "name" + counter;
+            let ageId = "age" + counter;
+            let nageId = "nage" + counter;
+            let genderId = "gender" + counter;
+            let gendernId = "gendern" + counter;
+      
+            document.getElementById(inputId).style.display = "none";
+            document.getElementById(nameId).style.display = "none";
+            document.getElementById(ageId).style.display = "none";
+            document.getElementById(nageId).style.display = "none";
+            document.getElementById(genderId).style.display = "none";
+            document.getElementById(gendernId).style.display = "none";
+      
+            counter--;
+            people--;
+            updatePassengerNumber();
+            calculateFare();
+          }
+        }
+      
+        function calculateFare() {
+          let fare = {{ flight_fare }};
+          let totalFare = 100 + people * parseFloat(fare);
+          document.getElementById("total_fare_value").textContent = totalFare;
+          document.getElementById("total_fare_input").value = totalFare;
+        }
+      
+        function updatePassengerNumber() {
+          document.getElementById("totalpassenger_value").textContent = people;
+          document.getElementById("totalpassenger_input").value = people;
+        }
+      
+        function checkPassengerAndSubmit() {
+          // Check if contact information is filled
+          let contactNumber = document.getElementById("contact_number").value.trim();
+          let email = document.getElementById("email").value.trim();
+      
+          if (contactNumber === "" || email === "") {
+            document.getElementById("passengerErrorMessage").textContent =
+              "Please fill out contact information.";
+            document.getElementById("passengerErrorMessage").style.display = "block";
+            return; // Stop further execution
+          }
+      
+          // Check if at least one passenger is added
+          if (people === 0) {
+            document.getElementById("passengerErrorMessage").textContent =
+              "Please add at least one passenger.";
+            document.getElementById("passengerErrorMessage").style.display = "block";
+            return; // Stop further execution
+          }
+      
+          // Check if all passenger details are filled out
+          for (let i = 1; i <= people; i++) {
+            let passengerName = document.getElementById("input" + i).value.trim();
+            let passengerAge = document.getElementById("age" + i).value.trim();
+      
+            if (passengerName === "" || passengerAge === "") {
+              document.getElementById("passengerErrorMessage").textContent =
+                "Please fill out all passenger details.";
+              document.getElementById("passengerErrorMessage").style.display = "block";
+              return; // Stop further execution
+            }
+          }
+      
+          // If all conditions are met, hide error message and submit the form
+          document.getElementById("passengerErrorMessage").style.display = "none";
+          document.getElementById("passengerForm").submit();
+        }
+      </script>
+  {% endblock %}

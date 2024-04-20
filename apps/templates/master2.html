@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/master.css' %}" />
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-image: url("{% static 'img/fly.jpg' %}");
+      background-size: cover;
+    }
+  </style>
+  <body>
+    <div class="top-bar">
+      <div class="left-content">
+        {% if request.path != '/' %}
+        <button onclick="location.href='{% url 'home' %}'">Home</button>
+        {% endif %}
+      </div>
+      <h1>FLY / Bharat</h1>
+      {% if user.is_authenticated %}
+      <div class="right-content">
+        <button onclick="location.href='{% url 'logout' %}'">Logout</button>
+      </div>
+      {% else %}
+      <div class="right-content">
+        <button onclick="location.href='{% url 'login' %}'">Login</button>
+      </div>
+      {% endif %}
+    </div>
+    {% block content %}{% endblock %}
+    <div class="bottom-bar"></div>
+    <div class="footer-bar">
+      <a href="#">Contact Us</a>
+      <a href="#">About Us</a>
+      <a href="#">Social Media</a>
+    </div>
+  </body>
+</html>
