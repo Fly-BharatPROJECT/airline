@@ -130,77 +130,7 @@ def bookflight(request):
         return render(request, 'bookflight.html', context)
 
 
-@login_required
-def passenger_details(request):
-    if request.method == 'POST':
-        contact_number = request.POST.get('contact_number')
-        email = request.POST.get('email')
-        fare_str = request.POST.get("total_fare")
-        fare = Decimal(fare_str)
-        departure_date = request.POST.get('departure_date')
-        class_type = request.POST.get('class_type')        
-        flight_id = request.POST.get('flight_id')    
-        flight = get_object_or_404(Flight, id=flight_id)   
-        booking = Booking.objects.create(           
-            departure_date=departure_date,
-            class_type=class_type,
-            flight_fare=fare,
-            flight=flight
-        ) 
-        array = []
 
-        #Loop to generate strings'A1'to'A26'
-        for i in range(1, 79):
-          array.append('A' + str(i))     
-        passenger_index = 1
-        while True:
-            passenger_name = request.POST.get(f'passenger_name{passenger_index}')
-            if not passenger_name:  # If no name is provided, stop the loop
-                break
-            passenger_age = request.POST.get(f'passenger_age{passenger_index}')
-            passenger_gender = request.POST.get(f'passenger_gender{passenger_index}')
-            Passenger.objects.create(
-                booking=booking,
-                name=passenger_name,
-                age=passenger_age,
-                gender=passenger_gender,
-                contact_number=contact_number,
-                email=email,
-                flight_id=flight_id, 
-                seat=array[passenger_index-1]             
-            )
-            passenger_index += 1
-        flight = Flight.objects.get(id=flight_id)
-        
-        # Calculate the number of seats booked in the current booking
-        booked_seats = Passenger.objects.filter(booking=booking).count()
-        
-        # Subtract booked_seats from total_seats
-        flight.total_seat -= booked_seats
-        
-        # Save the updated Flight object
-        flight.save()    
-        # Redirect to the payment page
-        return redirect('payment', booking_id=booking.pk, flight_fare=fare)
-    else:
-        # Retrieve flight details from the query parameters
-        from_location = request.GET.get('from_location')
-        to_location = request.GET.get('to_location')
-        departure_date = request.GET.get('departure_date')
-        class_type = request.GET.get('class_type')
-        flight_fare = request.GET.get('flight_fare')
-        flight_id = request.GET.get('flight_id')
-        # Pass flight details to the template context
-        context = {
-            'from_location': from_location,
-            'to_location': to_location,
-            'departure_date': departure_date,
-            'class_type': class_type,
-            'flight_fare': flight_fare,
-            'flight_id': flight_id,
-        }
-        # Render the form template
-        return render(request, 'passenger_details.html', context)
 
 
 
@@ -262,7 +192,8 @@ def payment_success(request, booking_id):
 
 @login_required
 def my_bookings(request):
-    bookings = Booking.objects.all()
+    user = request.user
+    bookings = Booking.objects.filter(user=user)
     booking_details = []
 
     for booking in bookings:
@@ -278,7 +209,7 @@ def my_bookings(request):
                 'flight': flight,
             })
         except Payment.DoesNotExist:
-            num_passengers_deleted = Passenger.objects.filter(booking=booking).count()
+            num_passengers_deleted = Passenger.objects.filter(booking=bookings).count()
             flight = Flight.objects.get(id=booking.flight_id)
             # Increase total_seat of Flight by the number of passengers deleted
             flight.total_seat += num_passengers_deleted
@@ -288,3 +219,106 @@ def my_bookings(request):
         'booking_details': booking_details,
     }
     return render(request, 'mybookings.html', context)
+
+
+
+
+
+
+
+
+
+@login_required
+def passenger_details(request):
+    if request.method == 'POST':
+        contact_number = request.POST.get('contact_number')
+        email = request.POST.get('email')
+        fare_str = request.POST.get("total_fare")
+        fare = Decimal(fare_str)
+        departure_date = request.POST.get('departure_date')
+        class_type = request.POST.get('class_type')        
+        flight_id = request.POST.get('flight_id')    
+        flight = get_object_or_404(Flight, id=flight_id)   
+        booking = Booking.objects.create(  
+            user=request.user,          
+            departure_date=departure_date,
+            class_type=class_type,
+            flight_fare=fare,
+            flight=flight
+        ) 
+
+        available_seats = generate_seat_numbers(flight_id,4)
+        
+        passenger_index = 1
+        while True:
+            passenger_name = request.POST.get(f'passenger_name{passenger_index}')
+            if not passenger_name:  # If no name is provided, stop the loop
+                break
+            passenger_age = request.POST.get(f'passenger_age{passenger_index}')
+            passenger_gender = request.POST.get(f'passenger_gender{passenger_index}')
+            # Assign the first available seat to the passenger
+            if available_seats:
+                seat = available_seats.pop(0)
+            else:
+                # If no available seats, handle accordingly (redirect to another page or show a message)
+                return HttpResponse("No available seats for this flight.")
+
+            Passenger.objects.create(
+                booking=booking,
+                name=passenger_name,
+                age=passenger_age,
+                gender=passenger_gender,
+                contact_number=contact_number,
+                email=email,
+                flight_id=flight_id, 
+                seat=seat
+            )
+            passenger_index += 1
+        booked_seats = Passenger.objects.filter(booking=booking).count()
+
+        flightt = Flight.objects.get(id=flight_id)
+        flightt.total_seat -= booked_seats
+        flightt.save()
+        
+        # Redirect to the payment page
+        return redirect('payment', booking_id=booking.pk, flight_fare=fare)
+    else:
+        # Retrieve flight details from the query parameters
+        from_location = request.GET.get('from_location')
+        to_location = request.GET.get('to_location')
+        departure_date = request.GET.get('departure_date')
+        class_type = request.GET.get('class_type')
+        flight_fare = request.GET.get('flight_fare')
+        flight_id = request.GET.get('flight_id')
+        # Pass flight details to the template context
+        context = {
+            'from_location': from_location,
+            'to_location': to_location,
+            'departure_date': departure_date,
+            'class_type': class_type,
+            'flight_fare': flight_fare,
+            'flight_id': flight_id,
+        }
+        # Render the form template
+        return render(request, 'passenger_details.html', context)
+
+def generate_seat_numbers(flight_id, total_seats):
+    alphabet = 'ABC'
+    available_seats = []
+    count = 0
+    for letter in alphabet:
+        for i in range(1, 4):
+            seat = f"{letter}{i}"
+            if not Passenger.objects.filter(flight_id=flight_id, seat=seat).exists():
+                available_seats.append(seat)
+                count += 1
+                if count == total_seats:
+                    return available_seats
+            if count == total_seats:
+                return available_seats
+    return available_seats
+
+
+
+                    
+    

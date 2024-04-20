@@ -20,13 +20,14 @@ class Flight(models.Model):
         return f"{self.airline} - {self.flight_number}"
 
 class Booking(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, null=True,default=1) 
     departure_date = models.DateField(null=True)
     class_type = models.CharField(max_length=50,null=True)
     flight_fare = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"Booking ID: {self.pk}, {self.departure_date} - {self.flight}"
+        return f'{self.id} - User: {self.user.username}'
 
 
 

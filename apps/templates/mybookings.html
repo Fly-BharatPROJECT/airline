@@ -91,6 +91,7 @@
               <th>Name</th>
               <th>Age</th>
               <th>Gender</th>
+              <th>Seat</th>
               <!-- Add more columns if needed -->
             </tr>
             {% for passenger in booking_detail.passengers %}
@@ -98,6 +99,7 @@
               <td>{{ passenger.name }}</td>
               <td>{{ passenger.age }}</td>
               <td>{{ passenger.gender }}</td>
+              <td>{{ passenger.seat }}</td>
               <!-- Add more columns if needed -->
             </tr>
             {% endfor %}
