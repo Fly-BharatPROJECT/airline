@@ -76,7 +76,7 @@
   border-radius: 10px;
   margin-top: 400px;
 }
-.heading {
+.heading h2 {
   color: #f8f8f9;
   text-align: center;
   margin-bottom: 20px;
@@ -163,7 +163,7 @@
   }
 }
 
-/* This is the css is for the search flight result page  */
+/* This is the css is for the search flight result page  aka bookflights  */
 
 .book-button {
   display: inline-block;
@@ -198,8 +198,8 @@
 
 .heading {
   font-weight: bolder;
-  color: black;
-  font-size:x-large
+  
+  font-size:x-large;
 }
 
 
@@ -215,13 +215,14 @@
 
       .left-section {
         padding: 20px;
-        border: 1px solid #060000;
+        border: 5px solid #0dafef;
         height: 500px;
+        background-color: transparent;
         
       }
       .right-section {
         padding: 20px;
-        border: 1px solid #070000;
+        border: 5px solid #0a97ef;
         height: auto;
       }
 
@@ -241,3 +242,36 @@
           width: auto; /* Reset width */
         }
       }
+
+      .button-my-bookings {
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: #f8f8f9;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .in {
+        border-radius: 5px;
+        border-color: #0056b3;
+        size: 10px;
+      }
+
+
+      /* extra   */
+      input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px;
+    border: 1px solid #069af7;
+     /* Make the input box width 100% of its container */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}

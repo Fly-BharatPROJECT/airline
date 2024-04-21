@@ -1,15 +1,8 @@
 {% extends "master2.html" %} {% load static %} {% block title %} Search Flight
 Results {% endblock %} {% block content %}
-
-  <style>
-     .left-section {
-        background-color: aquamarine;
-      }
-
-  </style>
     <div class="flex-container-1">
-      <div class="left-section">
-        <h2 class="heading">Passenger Details</h2>
+      <div class="left-section" >
+        <h2 class="heading1">Passenger Details</h2>
         <form
           id="passengerForm"
           action="{% url 'passenger_details'  %}"
@@ -79,9 +72,9 @@ Results {% endblock %} {% block content %}
             <div class="contact-information">
               <h3>Contact Information</h3>
               <label for="contact_number">Contact Number:</label>
-              <input type="text" id="contact_number" name="contact_number" required />
+              <input type="text" id="contact_number" name="contact_number" required class="in" />
               <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required />
+              <input type="email" id="email" name="email" required  class="in"/>
             </div>
             <h3>Enter Passenger Details:</h3>
             <div>
@@ -103,6 +96,7 @@ Results {% endblock %} {% block content %}
               <p>
                 <label for="name" id="name1" style="display: none">Name</label>
                 <input
+                class="in"
                   type="text"
                   id="input1"
                   style="display: none"
@@ -112,6 +106,7 @@ Results {% endblock %} {% block content %}
                 />
                 <label for="age" id="nage1" style="display: none">Age</label>
                 <input
+                class="in"
                   type="number"
                   id="age1"
                   style="display: none"
@@ -119,7 +114,7 @@ Results {% endblock %} {% block content %}
                   name="passenger_age1"
                 />
                 <label for="gender" id="gender1" style="display: none">Gender</label>
-                <select name="passenger_gender1" id="gendern1" style="display: none">
+                <select name="passenger_gender1" id="gendern1" style="display: none" class="in">
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
@@ -129,6 +124,7 @@ Results {% endblock %} {% block content %}
               <p>
                 <label for="name" id="name2" style="display: none">Name</label>
                 <input
+                class="in"
                   type="text"
                   id="input2"
                   style="display: none"
@@ -137,6 +133,7 @@ Results {% endblock %} {% block content %}
                 />
                 <label for="age" id="nage2" style="display: none">Age</label>
                 <input
+                class="in"
                   type="number"
                   id="age2"
                   style="display: none"
@@ -144,7 +141,7 @@ Results {% endblock %} {% block content %}
                   name="passenger_age2"
                 />
                 <label for="gender" id="gender2" style="display: none">Gender</label>
-                <select name="passenger_gender2" id="gendern2" style="display: none">
+                <select name="passenger_gender2" id="gendern2" style="display: none" class="in">
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
@@ -154,6 +151,7 @@ Results {% endblock %} {% block content %}
               <p>
                 <label for="name" id="name3" style="display: none">Name</label>
                 <input
+                class="in"
                   type="text"
                   id="input3"
                   style="display: none"
@@ -162,6 +160,7 @@ Results {% endblock %} {% block content %}
                 />
                 <label for="age" id="nage3" style="display: none">Age</label>
                 <input
+                class="in"
                   type="number"
                   id="age3"
                   style="display: none"
@@ -169,7 +168,7 @@ Results {% endblock %} {% block content %}
                   name="passenger_age3"
                 />
                 <label for="gender" id="gender3" style="display: none">Gender</label>
-                <select name="passenger_gender3" id="gendern3" style="display: none">
+                <select name="passenger_gender3" id="gendern3" style="display: none" class="in">
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
@@ -179,6 +178,7 @@ Results {% endblock %} {% block content %}
               <p>
                 <label for="name" id="name4" style="display: none">Name</label>
                 <input
+                class="in"
                   type="text"
                   id="input4"
                   style="display: none"
@@ -187,6 +187,7 @@ Results {% endblock %} {% block content %}
                 />
                 <label for="age" id="nage4" style="display: none">Age</label>
                 <input
+                class="in"
                   type="number"
                   id="age4"
                   style="display: none"
@@ -194,7 +195,7 @@ Results {% endblock %} {% block content %}
                   name="passenger_age4"
                 />
                 <label for="gender" id="gender4" style="display: none">Gender</label>
-                <select name="passenger_gender4" id="gendern4" style="display: none">
+                <select name="passenger_gender4" id="gendern4" style="display: none" class="in">
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>

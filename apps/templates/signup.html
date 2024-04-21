@@ -7,6 +7,11 @@
     <title>Sign Up</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
+  <style>
+    body {
+      background-image: url("{% static 'img/fly2.jpg' %}");
+    }
+  </style>
   <body>
     <div class="container">
       <h2>Sign Up</h2>
@@ -50,6 +55,20 @@
         <a href="{% url 'home' %}">Back to Homepage</a>
         <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
       </div>
+      {% if messages %} {% endif %}
     </div>
+    <script>
+      document
+        .getElementById("password2")
+        .addEventListener("input", function () {
+          var password1 = document.getElementById("password1");
+          var password2 = document.getElementById("password2");
+          if (password1.value !== password2.value) {
+            password2.setCustomValidity("Passwords do not match");
+          } else {
+            password2.setCustomValidity("");
+          }
+        });
+    </script>
   </body>
 </html>

@@ -1,10 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background-image: url("fly.jpg");
-  background-size: cover;
-}
 .top-bar {
   background-color: #4898f4; /* Blue color */
   color: #fff;
@@ -20,7 +13,7 @@ body {
   align-items: center;
 }
 .top-bar button {
-  padding: 10px 10px;
+  padding: 12px 20px;
   background-color: #007bff;
   color: #f8f8f9;
   border: none;
@@ -37,12 +30,21 @@ body {
   justify-content:baseline;
   align-items: center;
   padding: 20px;
+  gap: 200px;
 }
 
 .flex-container {
   display: flex;
-  justify-content:left;
+  justify-content:center;
   align-items: center;
+  padding: 20px;
+  padding-right: 40px;
+}
+
+.flex-container2 {
+  display: flex;
+  justify-content:right;
+  align-items: flex-end;
   padding: 20px;
 }
 .search-form {
@@ -74,7 +76,7 @@ body {
   border-radius: 10px;
   margin-top: 400px;
 }
-.heading {
+.heading h2 {
   color: #f8f8f9;
   text-align: center;
   margin-bottom: 20px;
@@ -121,4 +123,155 @@ body {
   color: #fff;
   text-decoration: none;
   margin: 0 10px;
+}
+
+/*  screen smaller than 768px */
+@media screen and (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-bar .left-content,
+  .top-bar .right-content {
+    margin-bottom: 10px;
+  }
+
+  .top-bar button {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .flex-container {
+    flex-direction: column;
+    align-items:normal;
+  }
+
+  .search-form input,
+  .search-form select {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust grid layout for smaller screens */
+  }
+
+  .footer-bar a {
+    display: block;
+    margin: 10px 0;
+  }
+}
+
+/* This is the css is for the search flight result page  aka bookflights  */
+
+.book-button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.book-button:hover {
+  background-color: #0056b3;
+}
+
+.back {
+  border-radius: 10px;
+  padding: 10px;
+  color: #0b0000;
+  font-weight: bold;
+  font-size:x-large;
+}
+
+.left,.no{
+  color: rgb(9, 0, 0);
+  font-weight: bold;
+  }
+
+.flighttable {
+  font-weight: bolder;
+  font-size:large;
+}  
+
+.heading {
+  font-weight: bolder;
+  
+  font-size:x-large;
+}
+
+
+/* passenger_details css  */
+
+      .flex-container-1 {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two equal columns */
+        gap: 2px; /* Space between columns */
+        
+      }
+
+      .left-section {
+        padding: 20px;
+        border: 5px solid #0dafef;
+        height: 500px;
+        background-color: transparent;
+        
+      }
+      .right-section {
+        padding: 20px;
+        border: 5px solid #0a97ef;
+        height: auto;
+      }
+
+     
+      .right-section {
+        background-color:transparents;
+      }
+
+      /* Adjustments for smaller screens */
+      @media screen and (max-width: 768px) {
+        .flex-container-1 {
+          grid-template-columns: 1fr; /* One column for smaller screens */
+        }
+
+        .left-section,
+        .right-section {
+          width: auto; /* Reset width */
+        }
+      }
+
+      .button-my-bookings {
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: #f8f8f9;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .in {
+        border-radius: 5px;
+        border-color: #0056b3;
+        size: 10px;
+      }
+
+
+      /* extra   */
+      input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px;
+    border: 1px solid #069af7;
+     /* Make the input box width 100% of its container */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
 }

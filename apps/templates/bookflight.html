@@ -1,20 +1,20 @@
 {% extends "master2.html" %} {% load static %} {% block title %} Search Flight
 Results {% endblock %} {% block content %}
-<div ><h3 class="heading">Available Flights:</h3></div>
+<div><h3 class="heading">Available Flights:</h3></div>
 <div class="flex-container-wrapper">
   <div class="flex-container">
     <div class="back">
-    <strong>
-      <p>From: {{ from_location }} &#8680; To: {{ to_location }}</p>
-      <p>Departure Date: {{ departure_date }}</p>
-      {% if class_type %}
-      <p>Class: {{ class_type }}</p>
-      {% endif %}
-    </strong>
+      <strong>
+        <p>From: {{ from_location }} &#8680; To: {{ to_location }}</p>
+        <p>Departure Date: {{ departure_date }}</p>
+        {% if class_type %}
+        <p>Class: {{ class_type }}</p>
+        {% endif %}
+      </strong>
+    </div>
   </div>
-  </div>
-  
-  <div class="flex-container2">   
+
+  <div class="flex-container2">
     <table class="flighttable">
       <thead>
         <tr>

@@ -7,6 +7,11 @@
     <title>Login</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   </head>
+  <style>
+    body {
+      background-image: url("{% static 'img/fly2.jpg' %}");
+    }
+  </style>
   <body>
     <div class="container">
       <h2>Login</h2>
@@ -23,11 +28,15 @@
         <label for="password">Password:</label>
         <input
           type="password"
-          id="password"
+          id="myInput"
           name="password"
           placeholder="Password"
           required
         />
+        <label class="show-password">
+          Show Password
+          <input type="checkbox" onclick="myFunction()" />
+        </label>
         <button type="submit" value="login">Login</button>
       </form>
       <div class="error">
@@ -46,5 +55,15 @@
         </p>
       </div>
     </div>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+      }
+    </script>
   </body>
 </html>
