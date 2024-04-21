@@ -18,6 +18,7 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
+        background-image: url("{% static 'img/fly2.jpg' %}");
       }
       .top-bar {
         width: 100%;
@@ -27,7 +28,7 @@
         top: 0;
         left: 0;
         margin-top: 0; /* Adjusted margin-top */
-        background-color: aqua; /* Dark background color */
+        background-color: #4898f4; /* Dark background color */
         /* White text color */
         padding: 15px; /* Adjusted padding */
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
@@ -42,7 +43,7 @@
         padding: 10px;
         width: 80%;
         border: 2px solid black;
-        background-color: aqua;
+        background-color: aquamarine;
       }
       .container {
         border: 2px solid black;
@@ -101,6 +102,12 @@
       button:hover {
         background-color: #0056b3;
       }
+      h1 {
+        color: rgb(254, 254, 254);
+        background-color: #4898f4;
+        padding: 10px;
+        border-radius: 5px;
+      }
     </style>
   </head>
   <body onload="generateBarcode()">
@@ -144,30 +151,31 @@
       </div>
       <div class="second-container">
         <h2>Flight Details</h2>
+        <h3>Flight No : {{flight.flight_number}}</h3>
         <table>
           <tr>
-            <td>Flight No:</td>
-            <td>{{flight.flight_number}}</td>
-            <td>Journey Date:</td>
-            <td>{{booking.departure_date}}</td>
+            <td><strong> Airline: </strong></td>
+            <td><strong>{{flight.airline}}</strong></td>
+            <td><strong>Journey Date:</strong></td>
+            <td><strong>{{booking.departure_date}}</strong></td>
           </tr>
           <tr>
-            <td>From:</td>
-            <td>{{flight.from_location}}</td>
-            <td>To:</td>
-            <td>{{flight.to_location}}</td>
+            <td><strong>From:</strong></td>
+            <td><strong>{{flight.from_location}}</strong></td>
+            <td><strong>To:</strong></td>
+            <td><strong>{{flight.to_location}}</strong></td>
           </tr>
           <tr>
-            <td>Class:</td>
-            <td>{{booking.class_type}}</td>
-            <td>Flight Name:</td>
-            <td>{{flight.airline}}</td>
+            <td><strong>Class:</strong></td>
+            <td><strong>{{booking.class_type}}</strong></td>
+            <td><strong>Flight Name:</strong></td>
+            <td><strong>{{flight.airline}}</strong></td>
           </tr>
           <tr>
-            <td>Departure Time:</td>
-            <td>{{flight.departure_time}}</td>
-            <td>Arrival Time:</td>
-            <td>{{flight.arrival_time}}</td>
+            <td><strong>Departure Time:</strong></td>
+            <td><strong>{{flight.departure_time}}</strong></td>
+            <td><strong>Arrival Time:</strong></td>
+            <td><strong>{{flight.arrival_time}}</strong></td>
           </tr>
         </table>
         <h2>Total Fare</h2>
