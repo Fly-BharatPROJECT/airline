@@ -4,7 +4,7 @@
     {% csrf_token %}
     <label for="email">Email</label>
     <input type="email" name="email" required placeholder="abc@gmail.com" />
-
+    <span>&nbsp;</span>
     <label for="issue">Issue</label>
     <select name="issue" id="issue">
       <option value="Login Issue">Login Issue</option>
@@ -12,6 +12,8 @@
       <option value="Booking Issue">Booking Issue</option>
       <option value="Other Issue">Other Issue</option>
     </select>
+    
+    <br>
     <label for="subject" name="subject">Subject</label>
     <textarea
       name="subject"

@@ -334,6 +334,7 @@ def help(request):
     else:
         return render(request,'help.html')   
 
-
+def aboutus(request):
+    return render(request,'AboutUs.html')
 
 
