@@ -329,7 +329,8 @@ def help(request):
            issue=issue,
            subject=subject,
        )
-       messages.info(request, "Issue Submited Successfully ")
+       messages.success(request, "Issue Submited Successfully ")
+       return render(request,'help.html')
     else:
         return render(request,'help.html')   
 

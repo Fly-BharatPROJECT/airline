@@ -1,6 +1,7 @@
-{% extends "master2.html" %} {% load static %} {% block title %}Contact us {% endblock %} {% block content %}
+{% extends "master2.html" %} {% load static %} {% block title %}Help me {% endblock %} {% block content %}
 <div class="contact">
-  <form action="{% url 'help' %}">
+  <form action="{% url 'help' %}" method="post">
+    {% csrf_token %}
     <label for="email">Email</label>
     <input type="email" name="email" required placeholder="abc@gmail.com" />
 
@@ -21,6 +22,13 @@
     ></textarea>
     <button type="submit" class="submit">Submit</button>
   </form>
-  {% if messages %} {{message}} {% endif %}
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
 </div>
 {% endblock %}

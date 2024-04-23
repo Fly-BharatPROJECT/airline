@@ -91,6 +91,6 @@ class Help(models.Model):
          issue = models.CharField(max_length=100)
          subject = models.CharField(max_length=5000)
          def __str__(self):
-             return {self.subject}
+            return self.email
     
 
