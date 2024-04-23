@@ -12,5 +12,6 @@ urlpatterns = [
     path('payment/<int:booking_id>/<str:flight_fare>/', views.payment, name='payment'),
     path('payment_success/<int:booking_id>', views.payment_success, name='payment_success'),
     path('mybookings/', views.my_bookings, name='mybookings'),
+    path('help-me/', views.help, name='help'),
     # Add more URLs for other functionalities as needed
 ]

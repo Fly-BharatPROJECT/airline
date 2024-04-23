@@ -1,0 +1,26 @@
+{% extends "master2.html" %} {% load static %} {% block title %}Contact us {% endblock %} {% block content %}
+<div class="contact">
+  <form action="{% url 'help' %}">
+    <label for="email">Email</label>
+    <input type="email" name="email" required placeholder="abc@gmail.com" />
+
+    <label for="issue">Issue</label>
+    <select name="issue" id="issue">
+      <option value="Login Issue">Login Issue</option>
+      <option value="Payment Issue">Payment Issue</option>
+      <option value="Booking Issue">Booking Issue</option>
+      <option value="Other Issue">Other Issue</option>
+    </select>
+    <label for="subject" name="subject">Subject</label>
+    <textarea
+      name="subject"
+      id="subject"
+      cols="30"
+      rows="10"
+      placeholder="Write your Problem"
+    ></textarea>
+    <button type="submit" class="submit">Submit</button>
+  </form>
+  {% if messages %} {{message}} {% endif %}
+</div>
+{% endblock %}

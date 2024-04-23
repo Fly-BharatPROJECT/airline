@@ -83,3 +83,14 @@ class Passenger(models.Model):
         return f'{self.name} - Booking ID: {self.booking_id}'
     
 
+class Help(models.Model):
+         email = models.EmailField(
+        _('Email'),
+        default='noreply@example.com'
+    )
+         issue = models.CharField(max_length=100)
+         subject = models.CharField(max_length=5000)
+         def __str__(self):
+             return {self.subject}
+    
+

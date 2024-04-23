@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.urls import reverse 
 from django.http import JsonResponse
-from .models import Flight,Booking,Passenger,Payment
+from .models import Flight,Booking,Passenger,Payment,Help
 from django.shortcuts import HttpResponse
 from django.contrib.sessions.models import Session
 from decimal import Decimal
@@ -317,3 +317,22 @@ def generate_seat_numbers(flight_id, total_seats):
             if count == total_seats:
                 return available_seats
     return available_seats
+
+
+def help(request):
+    if request.method == 'POST':
+       email=request.POST.get('email')
+       issue=request.POST.get('issue')
+       subject=request.POST.get('subject')
+       help=Help.objects.create(
+           email=email,
+           issue=issue,
+           subject=subject,
+       )
+       messages.info(request, "Issue Submited Successfully ")
+    else:
+        return render(request,'help.html')   
+
+
+
+
