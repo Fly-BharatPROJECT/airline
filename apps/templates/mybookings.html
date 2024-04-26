@@ -84,62 +84,87 @@
           Booking ID: {{ booking_detail.booking.pk }}
         </h2>
         <div id="ticket-{{ booking_detail.booking.pk }}" style="display: none">
-          <p>Reference Number: {{ booking_detail.reference_number }}</p>
-          <h3>Passenger Details</h3>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Age</th>
-              <th>Gender</th>
-              <th>Seat</th>
-              <!-- Add more columns if needed -->
-            </tr>
-            {% for passenger in booking_detail.passengers %}
-            <tr>
-              <td>{{ passenger.name }}</td>
-              <td>{{ passenger.age }}</td>
-              <td>{{ passenger.gender }}</td>
-              <td>{{ passenger.seat }}</td>
-              <!-- Add more columns if needed -->
-            </tr>
-            {% endfor %}
-          </table>
-          <h3>Flight Details</h3>
-          <table>
-            <tr>
-              <td>Flight No:</td>
-              <td>{{ booking_detail.flight.flight_number }}</td>
-              <td>Journey Date:</td>
-              <td>{{ booking_detail.booking.departure_date }}</td>
-            </tr>
-            <tr>
-              <td>From:</td>
-              <td>{{ booking_detail.flight.from_location }}</td>
-              <td>To:</td>
-              <td>{{ booking_detail.flight.to_location }}</td>
-            </tr>
-            <tr>
-              <td>Class:</td>
-              <td>{{ booking_detail.booking.class_type }}</td>
-              <td>Flight Name:</td>
-              <td>{{ booking_detail.flight.airline }}</td>
-            </tr>
-          </table>
-          <h3>Total Fare</h3>
-          <table>
-            <tr>
-              <td>Flight Price:</td>
-              <td>{{ booking_detail.flight.price }}</td>
-            </tr>
-            <tr>
-              <td>GST Tax:</td>
-              <td>100</td>
-            </tr>
-            <tr>
-              <td>Total Price:</td>
-              <td>{{ booking_detail.fare.amount }}</td>
-            </tr>
-          </table>
+          <div class="main-container" id="main-container">
+            <div class="container">
+              <img
+                class="rectangle-image"
+                src="{% static 'img/logo.png' %}"
+                alt="Plane Image"
+              />
+              <hr />
+              <!-- Display booking details -->
+              <h2>Booking Details</h2>
+              <p>Booking ID: {{ booking.pk }}</p>
+              <p>Reference Number: {{ reference_number }}</p>
+              <hr />
+              <h2>Passenger Details</h2>
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Seat</th>
+                </tr>
+                {% for passenger in passengers %}
+                <tr>
+                  <td>{{ passenger.name }}</td>
+                  <td>{{ passenger.age }}</td>
+                  <td>{{ passenger.gender }}</td>
+                  <td>{{ passenger.seat }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+            <div class="second-container">
+              <h2>Flight Details</h2>
+              <h3>Flight No : {{flight.flight_number}}</h3>
+              <table>
+                <tr>
+                  <td><strong> Airline: </strong></td>
+                  <td><strong>{{flight.airline}}</strong></td>
+                  <td><strong>Journey Date:</strong></td>
+                  <td><strong>{{booking.departure_date}}</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>From:</strong></td>
+                  <td><strong>{{flight.from_location}}</strong></td>
+                  <td><strong>To:</strong></td>
+                  <td><strong>{{flight.to_location}}</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Class:</strong></td>
+                  <td><strong>{{booking.class_type}}</strong></td>
+                  <td><strong>Flight Name:</strong></td>
+                  <td><strong>{{flight.airline}}</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Departure Time:</strong></td>
+                  <td><strong>{{flight.departure_time}}</strong></td>
+                  <td><strong>Arrival Time:</strong></td>
+                  <td><strong>{{flight.arrival_time}}</strong></td>
+                </tr>
+              </table>
+              <h2>Total Fare</h2>
+              <table>
+                <tr>
+                  <td>Flight Price:</td>
+                  <td>{{flight.price}}</td>
+                </tr>
+                <tr>
+                  <td>GST Tax :</td>
+                  <td>100</td>
+                </tr>
+                <tr>
+                  <td>Total Price:</td>
+                  <td>{{fare.amount}}</td>
+                </tr>
+              </table>
+              <div class="barcode">
+                <!-- Barcode will be displayed here -->
+                <svg id="barcode"></svg>
+              </div>
+            </div>
+          </div>
           <button
             class="download-button"
             onclick="downloadTicket({{ booking_detail.booking.pk }})"
