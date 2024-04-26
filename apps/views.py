@@ -205,7 +205,7 @@ def my_bookings(request):
                 'booking': booking,
                 'reference_number': payment.reference,
                 'passengers': passengers,
-                'fare': payment.amount,
+                'fare': payment,
                 'flight': flight,
             })
         except Payment.DoesNotExist:

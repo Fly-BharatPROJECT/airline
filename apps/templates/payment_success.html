@@ -27,16 +27,15 @@
         gap: 10px;
         top: 0;
         left: 0;
-        margin-top: 0; /* Adjusted margin-top */
-        background-color: #4898f4; /* Dark background color */
-        /* White text color */
-        padding: 15px; /* Adjusted padding */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added box shadow */
-        z-index: 1000; /* Ensure the top bar is above other content */
+        margin-top: 0; 
+        background-color: #4898f4; 
+        padding: 15px; 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+        z-index: 1000;
       }
 
       .main-container {
-        margin-top: 40px; /* Adjusted margin-top */
+        margin-top: 40px; 
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
@@ -126,7 +125,6 @@
           alt="Plane Image"
         />
         <hr />
-        <!-- Display booking details -->
         <h2>Booking Details</h2>
         <p>Booking ID: {{ booking.pk }}</p>
         <p>Reference Number: {{ reference_number }}</p>
@@ -194,38 +192,33 @@
           </tr>
         </table>
         <div class="barcode">
-          <!-- Barcode will be displayed here -->
           <svg id="barcode"></svg>
         </div>
       </div>
     </div>
 
     <script>
-      // Disable back navigation
       window.history.pushState(null, "", window.location.href);
       window.onpopstate = function () {
-        goToHome(); // Redirect to home page if user tries to navigate back
+        goToHome(); 
       };
       function generateBarcode() {
-        // Get the input number
-        var number = "{{ reference_number }}"; // Added quotes for string interpolation
+        
+        var number = "{{ reference_number }}"; 
 
-        // Generate barcode
+       
         JsBarcode("#barcode", number, {
-          format: "CODE128", // Choose barcode format (e.g., CODE128)
-          displayValue: true, // Display the value below the barcode
+          format: "CODE128", 
+          displayValue: true, 
         });
       }
 
       function downloadPDF() {
         const mainContainer = document.getElementById("main-container");
-
-        // Use html2pdf to render the entire page as PDF
         html2pdf().from(mainContainer).save();
       }
 
       function goToHome() {
-        // Redirect to home page
         window.location.href = "/";
       }
     </script>

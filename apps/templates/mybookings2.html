@@ -1,110 +1,120 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>My Bookings</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <style>
+      body {
+        width: auto;
+        background-image: url("{%  static 'img/fly.jpg' %}");
+      }
+      .body {
+        flex-direction: column;
+        align-items: first baseline;
+        justify-content: left;
+      }
+      .top-bar {
+        background-color: #4898f4;
+        color: #fff;
+        padding: 10px 20px;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+      }
+      .main-container {
+        display: grid;
+        flex-direction: column;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        border: 2px solid black;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: aquamarine;
+      }
+
+      .booking-title {
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .download-button {
+        margin-top: 20px;
+      }
+
+      .home-button {
+        margin-top: 20px;
+      }
+
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .container {
+        border: 2px solid black;
+        padding: 10px;
+      }
+
+      .second-container {
+        border: 2px solid black;
+        padding: 10px;
+      }
+      .rectangle-image {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      hr {
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        top: 20px;
+        border: none;
+        height: 5px;
+        background: black;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .barcode {
+        padding: 10px;
+        position: relative;
+      }
+
+      h1 {
+        color: rgb(254, 254, 254);
+        background-color: #4898f4;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+      }
+    </style>
   </head>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-image: url("{% static 'img/fly.jpg' %}");
-      background-size: cover;
-    }
-    .top-bar {
-      background-color: #4898f4; /* Blue color */
-      color: #fff;
-      padding: 5px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-    }
-    .button-container {
-      margin-right: auto; /* Pushes the button to the left */
-    }
-    .main-container {
-      display: grid;
-      flex-direction: column;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      border: 2px solid black;
-      padding: 20px;
-      margin-bottom: 20px;
-      background-color: aquamarine;
-    }
-    .booking-title {
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    button {
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .container {
-      border: 2px solid black;
-      padding: 10px;
-    }
-
-    .second-container {
-      border: 2px solid black;
-      padding: 10px;
-    }
-    .rectangle-image {
-      max-width: 100%;
-      max-height: 100%;
-    }
-    hr {
-      width: 100%;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      position: relative;
-      top: 20px;
-      border: none;
-      height: 5px;
-      background: black;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th,
-    td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    .barcode {
-      padding: 10px;
-      position: relative;
-    }
-
-    h1 {
-      color: rgb(254, 254, 254);
-      background-color: #4898f4;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-    }
-  </style>
   <body>
     <div class="top-bar">
-      <button onclick="location.href='{% url 'home' %}'">Home</button>
-      <h1>FLY / Bharat</h1>
+      <button class="home-button" onclick="goToHome()">Home</button>
     </div>
     <div class="body">
       <h1>My Bookings</h1>
