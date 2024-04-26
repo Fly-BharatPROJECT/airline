@@ -14,4 +14,5 @@ urlpatterns = [
     path('mybookings/', views.my_bookings, name='mybookings'),
     path('help/', views.help, name='help'),
     path('aboutus/', views.aboutus, name='aboutus'),
+    path('error-404/', views.error_404, name='error_404'),
 ]

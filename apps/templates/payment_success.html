@@ -111,7 +111,9 @@
   </head>
   <body onload="generateBarcode()">
     <div class="top-bar">
-      <button class="home-button" onclick="goToHome()">Home</button>
+      <button class="home-button" onclick="location.href='{% url 'home' %}'">
+        Home
+      </button>
       <button class="download-button" onclick="downloadPDF()">
         Download Ticket
       </button>
@@ -198,9 +200,14 @@
     </div>
 
     <script>
-      window.history.pushState(null, "", window.location.href);
-      window.onpopstate = function () {
-        goToHome();
+      function preventBack() {
+        window.history.forward();
+      }
+
+      setTimeout("preventBack()", 0);
+
+      window.onunload = function () {
+        null;
       };
       function generateBarcode() {
         var number = "{{ reference_number }}";
@@ -214,10 +221,6 @@
       function downloadPDF() {
         const mainContainer = document.getElementById("main-container");
         html2pdf().from(mainContainer).save();
-      }
-
-      function goToHome() {
-        window.location.href = "/";
       }
     </script>
   </body>
