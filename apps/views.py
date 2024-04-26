@@ -203,7 +203,7 @@ def my_bookings(request):
             flight = Flight.objects.get(id=booking.flight_id)
             booking_details.append({
                 'booking': booking,
-                'reference_number': payment.reference,
+                'reference_number': int(payment.reference),
                 'passengers': passengers,
                 'fare': payment,
                 'flight': flight,

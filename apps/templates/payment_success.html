@@ -18,7 +18,7 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
-        background-image: url("{% static 'img/fly2.jpg' %}");
+        background-image: url("{% static 'img/fly.jpg' %}");
       }
       .top-bar {
         width: 100%;
@@ -27,15 +27,15 @@
         gap: 10px;
         top: 0;
         left: 0;
-        margin-top: 0; 
-        background-color: #4898f4; 
-        padding: 15px; 
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+        margin-top: 0;
+        background-color: #4898f4;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         z-index: 1000;
       }
 
       .main-container {
-        margin-top: 40px; 
+        margin-top: 40px;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
@@ -200,16 +200,14 @@
     <script>
       window.history.pushState(null, "", window.location.href);
       window.onpopstate = function () {
-        goToHome(); 
+        goToHome();
       };
       function generateBarcode() {
-        
-        var number = "{{ reference_number }}"; 
+        var number = "{{ reference_number }}";
 
-       
         JsBarcode("#barcode", number, {
-          format: "CODE128", 
-          displayValue: true, 
+          format: "CODE128",
+          displayValue: true,
         });
       }
 
