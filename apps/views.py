@@ -190,36 +190,62 @@ def payment_success(request, booking_id):
     }
     return render(request, 'payment_success.html', context)
 
+
 @login_required
 def my_bookings(request):
-    user = request.user
-    bookings = Booking.objects.filter(user=user)
-    booking_details = []
+    if request.method == 'POST':
+        booking_id = request.POST.get('booking_id')  # Assuming 'booking_id' is the name of the input field containing the booking ID
+        
+        booking = Booking.objects.get(pk=booking_id)
+        payment = Payment.objects.get(booking_id=booking_id)
+        passengers_deleted = Passenger.objects.filter(booking=booking).count()
+        flight = Flight.objects.get(id=booking.flight_id)
+            
+        flight.total_seat += passengers_deleted
+        flight.save()
+            
+        booking.delete()
+        payment.delete()
+            
+        return render(request,'mybookings.html')
+    else:
+        user = request.user
+        bookings = Booking.objects.filter(user=user)
+        booking_details = []
 
-    for booking in bookings:
-        try:
-            payment = Payment.objects.get(booking_id=booking.pk)
-            passengers = Passenger.objects.filter(booking=booking)
-            flight = Flight.objects.get(id=booking.flight_id)
-            booking_details.append({
-                'booking': booking,
-                'reference_number': int(payment.reference),
-                'passengers': passengers,
-                'fare': payment,
-                'flight': flight,
-            })
-        except Payment.DoesNotExist:
-            num_passengers_deleted = Passenger.objects.filter(booking=bookings).count()
-            flight = Flight.objects.get(id=booking.flight_id)
-            # Increase total_seat of Flight by the number of passengers deleted
-            flight.total_seat += num_passengers_deleted
-            flight.save()
-            booking.delete()
-    context = {
-        'booking_details': booking_details,
-    }
-    return render(request, 'mybookings.html', context)
+        for booking in bookings:
+            try:
+                payment = Payment.objects.get(booking_id=booking.pk)
+                passengers = Passenger.objects.filter(booking=booking)
+                flight = Flight.objects.get(id=booking.flight_id)
+                booking_details.append({
+                    'booking': booking,
+                    'reference_number': int(payment.reference),
+                    'passengers': passengers,
+                    'fare': payment,
+                    'flight': flight,
+                })
+            except Payment.DoesNotExist:
+                # If payment doesn't exist, just append the booking details without deleting
+                passengers_deleted = Passenger.objects.filter(booking=booking).count()
+                flight = Flight.objects.get(id=booking.flight_id)
+                # Increase total_seat of Flight by the number of passengers deleted
+                flight.total_seat += passengers_deleted
+                flight.save()
+                booking_details.append({
+                    'booking': booking,
+                    'reference_number': None,  # Assuming you handle this case in your template
+                    'passengers': None,  # Assuming you handle this case in your template
+                    'fare': None,  # Assuming you handle this case in your template
+                    'flight': flight,
+                })
+            
+        context = {
+            'booking_details': booking_details,
+        }
+        return render(request, 'mybookings.html', context)
 
+   
 
 
 

@@ -103,6 +103,17 @@
       border-radius: 5px;
       text-align: center;
     }
+    .bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px; /* Add margin for spacing */
+    }
+
+    .download-button,
+    form {
+      margin: 0 10px; /* Add margin between the buttons */
+    }
   </style>
   <body>
     <div class="top-bar">
@@ -219,12 +230,23 @@
                 </div>
               </div>
             </div>
-            <button
-              class="download-button"
-              onclick="downloadTicket({{ booking_detail.booking.pk }})"
-            >
-              Download Ticket
-            </button>
+            <div class="bottom">
+              <button
+                class="download-button"
+                onclick="downloadTicket({{ booking_detail.booking.pk }})"
+              >
+                Download Ticket
+              </button>
+              <form action="{% url 'mybookings' %}" method="post">
+                {% csrf_token %}
+                <input
+                  name="booking_id"
+                  value="{{ booking_detail.booking.pk }}"
+                  type="hidden"
+                />
+                <button type="submit">Cancel Ticket</button>
+              </form>
+            </div>
           </div>
         </div>
         {% endfor %}
