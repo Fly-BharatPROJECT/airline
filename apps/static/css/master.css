@@ -352,14 +352,15 @@ select {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
 }
 
-.overlay h1 {
+.aboutushead {
   font-size: 2.5rem;
+  text-align: center;
 }
 
 .overlay p {
   font-size: 1.2rem;
   color: #0b0000;
+  background-color: #fff;
 }
