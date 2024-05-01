@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import  Flight,Booking,Passenger,Payment,Help
+from .models import  Flight,Booking,Passenger,Payment,Help,Feedback
 
 @admin.register(Flight)
 class FlightAdmin(ImportExportModelAdmin):
@@ -10,7 +10,7 @@ admin.site.register(Passenger)
 admin.site.register(Booking)
 admin.site.register(Payment)
 admin.site.register(Help)
-
+admin.site.register(Feedback)
 
 
 

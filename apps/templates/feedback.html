@@ -1,0 +1,29 @@
+{% extends "master2.html" %} {% load static %} {% block title %}Feedback {% endblock %} {% block content %}
+<div class="contact">
+  <form action="{% url 'feedback' %}" method="post">
+    {% csrf_token %}
+    <label for="email">Email</label>
+    <input type="email" name="email" required placeholder="abc@gmail.com" />
+    <span>&nbsp;</span>
+    <br>
+    <label for="subject" name="subject">Subject</label>
+    <textarea
+      name="subject"
+      id="subject"
+      cols="30"
+      rows="10"
+      placeholder="Write your feedback so that we can improve the service we provide 😊"
+      required
+    ></textarea>
+    <button type="submit" class="submit">Submit</button>
+  </form>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+</div>
+{% endblock %}

@@ -219,9 +219,13 @@
       }
 
       function downloadPDF() {
-        const mainContainer = document.getElementById("main-container");
-        html2pdf().from(mainContainer).save();
-      }
+  const mainContainer = document.getElementById("main-container");
+  const options = {
+    filename: "{{ reference_number }}-{{flight.airline}}", // Set your custom file name here
+  };
+  html2pdf().from(mainContainer).set(options).save();
+}
+
     </script>
   </body>
 </html>

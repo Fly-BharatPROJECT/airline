@@ -13,6 +13,7 @@ urlpatterns = [
     path('payment_success/<int:booking_id>', views.payment_success, name='payment_success'),
     path('mybookings/', views.my_bookings, name='mybookings'),
     path('help/', views.help, name='help'),
+    path('feedback/', views.feedback, name='feedback'),
     path('aboutus/', views.aboutus, name='aboutus'),
     path('error-404/', views.error_404, name='error_404'),
 ]

@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fly / Bharat - Book Your Next Adventure</title>
     <link rel="stylesheet" href="{% static 'css/master.css' %}" />
-    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'img/favicon.ico' %}"
+    />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -60,14 +64,18 @@
           required
         />
         <datalist id="destinations">
-          <option value="New Delhi(DEL)"></option>
-          <option value="Mumbai(BOM)"></option>
-          <option value="Bengaluru(BLR)"></option>
-          <option value="Hyderabad(HYDs)"></option>
-          <option value="Chennai(MAA)"></option>
-          <option value="Kolkata(CCU)"></option>
-          <option value="Bhubaneswar(BBI)"></option>
-          <option value="Darjeeling(IXB)"></option>
+          <option value="Delhi"></option>
+          <option value="Mumbai"></option>
+          <option value="Bengaluru"></option>
+          <option value="Hyderabad"></option>
+          <option value="Chennai"></option>
+          <option value="Kolkata"></option>
+          <option value="Kochi"></option>
+          <option value="Goa"></option>
+          <option value="Pune"></option>
+          <option value="Ahmedabad"></option>
+          <option value="Jaipur"></option>
+          <option value="Bhubaneswar"></option>
         </datalist>
         <input type="date" name="departure_date" required />
         <select id="class" name="class">
@@ -84,7 +92,9 @@
     </div>
 
     <div class="bottom-bar">
-      <h2 class="heading" style="color: rgb(0, 6, 11)">Popular Destinations</h2>
+      <h2 class="headingmain" style="color: rgb(0, 6, 11)">
+        Popular Destinations
+      </h2>
       <div class="grid-container">
         <div class="grid-item">
           <a href="https://en.wikipedia.org/wiki/New_Delhi" target="_blank">
@@ -120,7 +130,8 @@
     <div class="footer-bar">
       <a href="{% url 'help' %}">Help me</a>
       <a href="{% url 'aboutus' %}">About Us</a>
-      <a href="#">Contact Us</a>
+      <a href="">Contact Us</a>
+      <a href="{% url 'feedback' %}">Feedback</a>
     </div>
     <script>
       document

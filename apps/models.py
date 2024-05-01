@@ -94,3 +94,13 @@ class Help(models.Model):
             return self.email
     
 
+
+class Feedback(models.Model):
+         email = models.EmailField(
+        _('Email'),
+        default='noreply@example.com'
+    )
+         subject = models.CharField(max_length=5000)
+         def __str__(self):
+            return self.email    
+
