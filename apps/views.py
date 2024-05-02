@@ -77,16 +77,33 @@ def loginpage(request):
 
     return render(request, 'login.html') 
 
+from .forms import CustomUserCreationForm
+
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('home')  
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+from .forms import CustomUserChangeForm
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'edit_profile.html', {'form': form, 'user': request.user})
+
 
 def logoutUser(request):
     logout(request)

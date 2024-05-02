@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 
+
 class Flight(models.Model):
     airline = models.CharField(max_length=100)
     flight_number = models.CharField(max_length=20)
