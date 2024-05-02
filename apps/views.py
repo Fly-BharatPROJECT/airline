@@ -21,18 +21,17 @@ import string
 
 def home(request):
     bookings = Booking.objects.all()
-    # Initialize an empty list to store booking details
     booking_details = []
 
-    # Iterate over each booking
+    
     for booking in bookings:
         try:
-            # Try to retrieve the payment associated with the booking
+           
             payment = Payment.objects.get(booking_id=booking.pk)
-            # Retrieve passenger details associated with the booking
+            
             passengers = Passenger.objects.filter(booking=booking)
             flight = Flight.objects.get(id=booking.flight_id)
-            # Append booking details to the list
+          
             booking_details.append({
                 'booking': booking,
                 'reference_number': payment.reference,
@@ -43,7 +42,6 @@ def home(request):
         except Payment.DoesNotExist:
             num_passengers_deleted = Passenger.objects.filter(booking=booking).count()
             flight = Flight.objects.get(id=booking.flight_id)
-            # Increase total_seat of Flight by the number of passengers deleted
             flight.total_seat += num_passengers_deleted
             flight.save()
             booking.delete()
@@ -160,14 +158,11 @@ def generate_reference_number():
 @login_required
 def payment(request, booking_id, flight_fare):
     if request.method == 'POST':
-        # Retrieve form data
-        payment_date = timezone.now()  # Get current timestamp
+        payment_date = timezone.now() 
         reference_number = generate_reference_number()
-        amount = flight_fare  # Using flight fare from the parameter
-        # Assuming the payment is successful
+        amount = flight_fare  
         paid = 'pass'  
 
-        # Save payment data to the database
         payment = Payment.objects.create(
             booking_id=booking_id,
             reference=reference_number,
@@ -175,10 +170,8 @@ def payment(request, booking_id, flight_fare):
             payment_date=payment_date,
             paid=paid
         )        
-        # Redirect to success page or any other page as needed
-        return redirect('payment_success',booking_id=booking_id)  # Assuming there's a URL named 'payment_success'
+        return redirect('payment_success',booking_id=booking_id)  
     else:
-        # Render the payment form template
         context = {
             'booking_id': booking_id,
             'flight_fare': flight_fare,
@@ -211,7 +204,7 @@ def payment_success(request, booking_id):
 @login_required
 def my_bookings(request):
     if request.method == 'POST':
-        booking_id = request.POST.get('booking_id')  # Assuming 'booking_id' is the name of the input field containing the booking ID
+        booking_id = request.POST.get('booking_id')  
         
         booking = Booking.objects.get(pk=booking_id)
         payment = Payment.objects.get(booking_id=booking_id)
@@ -224,7 +217,7 @@ def my_bookings(request):
         booking.delete()
         payment.delete()
             
-        return render(request,'mybookings.html')
+        return render(request,'home.html')
     else:
         user = request.user
         bookings = Booking.objects.filter(user=user)
@@ -243,19 +236,11 @@ def my_bookings(request):
                     'flight': flight,
                 })
             except Payment.DoesNotExist:
-                # If payment doesn't exist, just append the booking details without deleting
                 passengers_deleted = Passenger.objects.filter(booking=booking).count()
                 flight = Flight.objects.get(id=booking.flight_id)
-                # Increase total_seat of Flight by the number of passengers deleted
                 flight.total_seat += passengers_deleted
                 flight.save()
-                booking_details.append({
-                    'booking': booking,
-                    'reference_number': None,  # Assuming you handle this case in your template
-                    'passengers': None,  # Assuming you handle this case in your template
-                    'fare': None,  # Assuming you handle this case in your template
-                    'flight': flight,
-                })
+                booking.delete()
             
         context = {
             'booking_details': booking_details,

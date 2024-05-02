@@ -42,7 +42,7 @@ class Payment(models.Model):
     booking = models.ForeignKey('Booking', on_delete=models.CASCADE)
     reference = models.CharField(max_length=100)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_date = models.DateTimeField(auto_now_add=True)
+    payment_date = models.DateTimeField()
     paid = models.CharField(max_length=10, choices=STATUS_CHOICES, default='fail')
 
     def __str__(self):

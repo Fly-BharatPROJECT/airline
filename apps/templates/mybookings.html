@@ -16,7 +16,7 @@
       background-size: cover;
     }
     .top-bar {
-      background-color: #4898f4; /* Blue color */
+      background-color: #4898f4; 
       color: #fff;
       padding: 5px 20px;
       display: flex;
@@ -25,7 +25,7 @@
       border-radius: 10px;
     }
     .button-container {
-      margin-right: auto; /* Pushes the button to the left */
+      margin-right: auto; 
     }
     .main-container {
       display: grid;
@@ -107,12 +107,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 10px; /* Add margin for spacing */
+      margin-top: 10px; 
     }
 
     .download-button,
     form {
-      margin: 0 10px; /* Add margin between the buttons */
+      margin: 0 10px; 
     }
   </style>
   <body>
@@ -151,6 +151,7 @@
                 <h2>Booking Details</h2>
                 <p>Booking ID: {{ booking_detail.booking.pk }}</p>
                 <p>Reference Number: {{ booking_detail.reference_number }}</p>
+                <p>Booked on : {{ booking_detail.fare.payment_date }}</p>
                 <hr />
                 <h2>Passenger Details</h2>
                 <table>
