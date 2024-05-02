@@ -85,6 +85,7 @@ class Passenger(models.Model):
     
 
 class Help(models.Model):
+         user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
          email = models.EmailField(
         _('Email'),
         default='noreply@example.com'

@@ -353,6 +353,7 @@ def help(request):
        issue=request.POST.get('issue')
        subject=request.POST.get('subject')
        help=Help.objects.create(
+           user=request.user,
            email=email,
            issue=issue,
            subject=subject,
@@ -362,7 +363,7 @@ def help(request):
     else:
         return render(request,'help.html')  
 
-@login_required
+
 def feedback(request):
     if request.method == 'POST':
        email=request.POST.get('email')
