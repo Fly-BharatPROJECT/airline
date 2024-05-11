@@ -247,13 +247,6 @@ def my_bookings(request):
         }
         return render(request, 'mybookings.html', context)
 
-   
-
-
-
-
-
-
 
 
 @login_required
