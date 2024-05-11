@@ -9,13 +9,12 @@ from django.urls import reverse
 from django.http import JsonResponse
 from .models import Flight,Booking,Passenger,Payment,Help,Feedback
 from django.shortcuts import HttpResponse
-from django.contrib.sessions.models import Session
 from decimal import Decimal
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from datetime import datetime
 import random
-import string
+
 
 
 
