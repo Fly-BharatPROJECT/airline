@@ -2,7 +2,7 @@
 
 ## Overview
 FLY-BHARAT is a college project involving the development of a flight booking application using Django, a popular Python-based web framework. This application provides functionality for searching and booking flights, offering a simple and intuitive interface for users.
-![Homepage](Homepage.png)
+<img src="Homepage.png" alt="Homepage" width="30%" />
 ## Features
 
 - **Flight Search and Booking**: Users can search for available flights and make reservations.
