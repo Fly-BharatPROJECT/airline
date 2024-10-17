@@ -20,7 +20,7 @@ FLY-BHARAT is a college project involving the development of a flight booking ap
 
 1. Clone the repository:
    ```sh
-   git clone <repository-url>
+   git clone https://github.com/Fly-BharatPROJECT/airline.git
    ```
 2. Navigate to the project directory:
    ```sh
@@ -50,5 +50,4 @@ This project is licensed for educational purposes.
 ## Contributors
 
 This project was developed as part of a college assignment by a dedicated team of students interested in web development using Django.
-
 
